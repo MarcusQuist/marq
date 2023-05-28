@@ -1,0 +1,236 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+                <link href="lib/tom-select/tom-select.css" rel="stylesheet">
+                <script src="lib/tom-select/tom-select.complete.min.js"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="zeeguu.api.api.accounts">zeeguu.api.api.accounts</option>
+                                
+                                    <option value="zeeguu.api.api.utils">zeeguu.api.api.utils</option>
+                                
+                                    <option value="zeeguu.api.api.bookmarks_and_words">zeeguu.api.api.bookmarks_and_words</option>
+                                
+                                    <option value="zeeguu.api.api.search">zeeguu.api.api.search</option>
+                                
+                                    <option value="zeeguu.api.api.speech">zeeguu.api.api.speech</option>
+                                
+                                    <option value="zeeguu.api.api.topics">zeeguu.api.api.topics</option>
+                                
+                                    <option value="zeeguu.api.api.translation">zeeguu.api.api.translation</option>
+                                
+                                    <option value="zeeguu.api.api.translator">zeeguu.api.api.translator</option>
+                                
+                                    <option value="zeeguu.api.api.user">zeeguu.api.api.user</option>
+                                
+                                    <option value="zeeguu.api.api.user_article">zeeguu.api.api.user_article</option>
+                                
+                                    <option value="zeeguu.api.api.user_languages">zeeguu.api.api.user_languages</option>
+                                
+                                    <option value="zeeguu.api.api.teacher_dashboard">zeeguu.api.api.teacher_dashboard</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#0600f9", "font": {"color": "black"}, "id": "zeeguu.api.api.accounts", "label": "zeeguu.api.api.accounts\n(LOC: 113)", "mass": 3.2922693744611555, "shape": "dot", "size": 10.974231248203852}, {"color": "#0700f8", "font": {"color": "black"}, "id": "zeeguu.api.api.utils", "label": "zeeguu.api.api.utils\n(LOC: 111)", "mass": 3.287096465178657, "shape": "dot", "size": 10.95698821726219}, {"color": "#0700f8", "font": {"color": "black"}, "id": "zeeguu.api.api.bookmarks_and_words", "label": "zeeguu.api.api.bookmarks_and_words\n(LOC: 166)", "mass": 3.429351470447361, "shape": "dot", "size": 11.43117156815787}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.api.api.search", "label": "zeeguu.api.api.search\n(LOC: 146)", "mass": 3.3776223776223775, "shape": "dot", "size": 11.258741258741258}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.api.api.speech", "label": "zeeguu.api.api.speech\n(LOC: 100)", "mass": 3.258645464124916, "shape": "dot", "size": 10.862151547083053}, {"color": "#0600f9", "font": {"color": "black"}, "id": "zeeguu.api.api.topics", "label": "zeeguu.api.api.topics\n(LOC: 163)", "mass": 3.421592106523613, "shape": "dot", "size": 11.405307021745378}, {"color": "#1600e9", "font": {"color": "black"}, "id": "zeeguu.api.api.translation", "label": "zeeguu.api.api.translation\n(LOC: 267)", "mass": 3.690583389213526, "shape": "dot", "size": 12.301944630711754}, {"color": "#0400fb", "font": {"color": "black"}, "id": "zeeguu.api.api.translator", "label": "zeeguu.api.api.translator\n(LOC: 193)", "mass": 3.4991857457610878, "shape": "dot", "size": 11.663952485870293}, {"color": "#0700f8", "font": {"color": "black"}, "id": "zeeguu.api.api.user", "label": "zeeguu.api.api.user\n(LOC: 131)", "mass": 3.33882555800364, "shape": "dot", "size": 11.129418526678801}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.api.api.user_article", "label": "zeeguu.api.api.user_article\n(LOC: 116)", "mass": 3.3000287383849027, "shape": "dot", "size": 11.000095794616342}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.api.api.user_languages", "label": "zeeguu.api.api.user_languages\n(LOC: 121)", "mass": 3.3129610115911485, "shape": "dot", "size": 11.043203371970495}, {"color": "#1a00e5", "font": {"color": "black"}, "id": "zeeguu.api.api.teacher_dashboard", "label": "zeeguu.api.api.teacher_dashboard\n(LOC: 794)", "mass": 5.053644985151835, "shape": "dot", "size": 16.84548328383945}]);
+                  edges = new vis.DataSet([{"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.api.api.accounts", "label": "1", "to": "zeeguu.api.api.utils", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.api.api.speech", "label": "1", "to": "zeeguu.api.api.utils", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.api.api.translation", "label": "1", "to": "zeeguu.api.api.translator", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.api.api.teacher_dashboard", "label": "1", "to": "zeeguu.api.api.utils", "width": 0.05}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "discrete"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": false,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
