@@ -1,4 +1,4 @@
-def get_color(value):
+def get_color(value, churn_upper_bound = 999):
     #Maps a value between 1 and 2000 to a color between blue and red
 
     # Define the blue and red color values
@@ -7,7 +7,7 @@ def get_color(value):
     
     # Interpolate between blue and red based on the value
     # NOTE: change 999 to increase the upper bound for the color red 
-    t = (value - 1) / 999 
+    t = (value - 1) / churn_upper_bound 
     color = tuple(int(round((1 - t) * b + t * r)) for b, r in zip(blue, red))
     
     # Convert the color to hexadecimal format

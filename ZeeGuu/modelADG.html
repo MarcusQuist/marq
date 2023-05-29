@@ -1,0 +1,300 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+                <link href="lib/tom-select/tom-select.css" rel="stylesheet">
+                <script src="lib/tom-select/tom-select.complete.min.js"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+             #config {
+                 float: left;
+                 width: 400px;
+                 height: 600px;
+             }
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="zeeguu.core.model.unique_code">zeeguu.core.model.unique_code</option>
+                                
+                                    <option value="zeeguu.core.model.personal_copy">zeeguu.core.model.personal_copy</option>
+                                
+                                    <option value="zeeguu.core.model.article">zeeguu.core.model.article</option>
+                                
+                                    <option value="zeeguu.core.model.search">zeeguu.core.model.search</option>
+                                
+                                    <option value="zeeguu.core.model.search_filter">zeeguu.core.model.search_filter</option>
+                                
+                                    <option value="zeeguu.core.model.search_subscription">zeeguu.core.model.search_subscription</option>
+                                
+                                    <option value="zeeguu.core.model.user_article">zeeguu.core.model.user_article</option>
+                                
+                                    <option value="zeeguu.core.model.user_word">zeeguu.core.model.user_word</option>
+                                
+                                    <option value="zeeguu.core.model.article_difficulty_feedback">zeeguu.core.model.article_difficulty_feedback</option>
+                                
+                                    <option value="zeeguu.core.model.language">zeeguu.core.model.language</option>
+                                
+                                    <option value="zeeguu.core.model.user_language">zeeguu.core.model.user_language</option>
+                                
+                                    <option value="zeeguu.core.model.cohort_article_map">zeeguu.core.model.cohort_article_map</option>
+                                
+                                    <option value="zeeguu.core.model.user_reading_session">zeeguu.core.model.user_reading_session</option>
+                                
+                                    <option value="zeeguu.core.model.session">zeeguu.core.model.session</option>
+                                
+                                    <option value="zeeguu.core.model.user">zeeguu.core.model.user</option>
+                                
+                                    <option value="zeeguu.core.model.sorted_exercise_log">zeeguu.core.model.sorted_exercise_log</option>
+                                
+                                    <option value="zeeguu.core.model.bookmark">zeeguu.core.model.bookmark</option>
+                                
+                                    <option value="zeeguu.core.model.difficulty_lingo_rank">zeeguu.core.model.difficulty_lingo_rank</option>
+                                
+                                    <option value="zeeguu.core.model.user_activitiy_data">zeeguu.core.model.user_activitiy_data</option>
+                                
+                                    <option value="zeeguu.core.model.word_knowledge">zeeguu.core.model.word_knowledge</option>
+                                
+                                    <option value="zeeguu.core.model.url">zeeguu.core.model.url</option>
+                                
+                                    <option value="zeeguu.core.model.feed">zeeguu.core.model.feed</option>
+                                
+                                    <option value="zeeguu.core.model.topic">zeeguu.core.model.topic</option>
+                                
+                                    <option value="zeeguu.core.model.articles_cache">zeeguu.core.model.articles_cache</option>
+                                
+                                    <option value="zeeguu.core.model.article_word">zeeguu.core.model.article_word</option>
+                                
+                                    <option value="zeeguu.core.model.exercise">zeeguu.core.model.exercise</option>
+                                
+                                    <option value="zeeguu.core.model.exercise_outcome">zeeguu.core.model.exercise_outcome</option>
+                                
+                                    <option value="zeeguu.core.model.exercise_source">zeeguu.core.model.exercise_source</option>
+                                
+                                    <option value="zeeguu.core.model.text">zeeguu.core.model.text</option>
+                                
+                                    <option value="zeeguu.core.model.bookmark_priority_arts">zeeguu.core.model.bookmark_priority_arts</option>
+                                
+                                    <option value="zeeguu.core.model.cohort">zeeguu.core.model.cohort</option>
+                                
+                                    <option value="zeeguu.core.model.teacher_cohort_map">zeeguu.core.model.teacher_cohort_map</option>
+                                
+                                    <option value="zeeguu.core.model.domain_name">zeeguu.core.model.domain_name</option>
+                                
+                                    <option value="zeeguu.core.model.localized_topic">zeeguu.core.model.localized_topic</option>
+                                
+                                    <option value="zeeguu.core.model.starred_article">zeeguu.core.model.starred_article</option>
+                                
+                                    <option value="zeeguu.core.model.teacher">zeeguu.core.model.teacher</option>
+                                
+                                    <option value="zeeguu.core.model.topic_filter">zeeguu.core.model.topic_filter</option>
+                                
+                                    <option value="zeeguu.core.model.topic_subscription">zeeguu.core.model.topic_subscription</option>
+                                
+                                    <option value="zeeguu.core.model.user_preference">zeeguu.core.model.user_preference</option>
+                                
+                                    <option value="zeeguu.core.model.learner_stats">zeeguu.core.model.learner_stats</option>
+                                
+                                    <option value="zeeguu.core.model.user_exercise_session">zeeguu.core.model.user_exercise_session</option>
+                                
+                                    <option value="zeeguu.core.model.word_to_study">zeeguu.core.model.word_to_study</option>
+                                
+                                    <option value="zeeguu.core.model.__init__">zeeguu.core.model.__init__</option>
+                                
+                                    <option value="zeeguu.core.model.smartwatch">zeeguu.core.model.smartwatch</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+            <div id="config"></div>
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.unique_code", "label": "zeeguu.core.model.unique_code\n(LOC: 23 C: 2)", "mass": 100, "shape": "dot", "size": 10.198294855829102}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.personal_copy", "label": "zeeguu.core.model.personal_copy\n(LOC: 33 C: 3)", "mass": 100, "shape": "dot", "size": 10.284510010537408}, {"color": "#0a00f5", "font": {"color": "black"}, "id": "zeeguu.core.model.article", "label": "zeeguu.core.model.article\n(LOC: 360 C: 39)", "mass": 100, "shape": "dot", "size": 13.103745569498994}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.search", "label": "zeeguu.core.model.search\n(LOC: 49 C: 2)", "mass": 100, "shape": "dot", "size": 10.422454258070696}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.search_filter", "label": "zeeguu.core.model.search_filter\n(LOC: 54 C: 2)", "mass": 100, "shape": "dot", "size": 10.465561835424849}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.search_subscription", "label": "zeeguu.core.model.search_subscription\n(LOC: 55 C: 2)", "mass": 100, "shape": "dot", "size": 10.474183350895679}, {"color": "#0200fd", "font": {"color": "black"}, "id": "zeeguu.core.model.user_article", "label": "zeeguu.core.model.user_article\n(LOC: 221 C: 8)", "mass": 100, "shape": "dot", "size": 11.905354919053549}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.user_word", "label": "zeeguu.core.model.user_word\n(LOC: 84 C: 6)", "mass": 100, "shape": "dot", "size": 10.724207299549764}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.article_difficulty_feedback", "label": "zeeguu.core.model.article_difficulty_feedback\n(LOC: 61 C: 2)", "mass": 100, "shape": "dot", "size": 10.525912443720664}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.core.model.language", "label": "zeeguu.core.model.language\n(LOC: 201 C: 20)", "mass": 100, "shape": "dot", "size": 11.732924609636939}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.user_language", "label": "zeeguu.core.model.user_language\n(LOC: 90 C: 3)", "mass": 100, "shape": "dot", "size": 10.77593639237475}, {"color": "#0200fd", "font": {"color": "black"}, "id": "zeeguu.core.model.cohort_article_map", "label": "zeeguu.core.model.cohort_article_map\n(LOC: 52 C: 7)", "mass": 100, "shape": "dot", "size": 10.448318804483188}, {"color": "#0200fd", "font": {"color": "black"}, "id": "zeeguu.core.model.user_reading_session", "label": "zeeguu.core.model.user_reading_session\n(LOC: 375 C: 7)", "mass": 100, "shape": "dot", "size": 13.233068301561453}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.session", "label": "zeeguu.core.model.session\n(LOC: 65 C: 2)", "mass": 100, "shape": "dot", "size": 10.560398505603985}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.core.model.user", "label": "zeeguu.core.model.user\n(LOC: 554 C: 20)", "mass": 100, "shape": "dot", "size": 14.77631957084012}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.sorted_exercise_log", "label": "zeeguu.core.model.sorted_exercise_log\n(LOC: 53 C: 3)", "mass": 100, "shape": "dot", "size": 10.456940319954018}, {"color": "#0400fb", "font": {"color": "black"}, "id": "zeeguu.core.model.bookmark", "label": "zeeguu.core.model.bookmark\n(LOC: 275 C: 16)", "mass": 100, "shape": "dot", "size": 12.370916754478397}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.difficulty_lingo_rank", "label": "zeeguu.core.model.difficulty_lingo_rank\n(LOC: 21 C: 1)", "mass": 100, "shape": "dot", "size": 10.181051824887442}, {"color": "#0200fd", "font": {"color": "black"}, "id": "zeeguu.core.model.user_activitiy_data", "label": "zeeguu.core.model.user_activitiy_data\n(LOC: 241 C: 9)", "mass": 100, "shape": "dot", "size": 12.07778522847016}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.word_knowledge", "label": "zeeguu.core.model.word_knowledge\n(LOC: 211 C: 4)", "mass": 100, "shape": "dot", "size": 11.819139764345243}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.url", "label": "zeeguu.core.model.url\n(LOC: 134 C: 2)", "mass": 100, "shape": "dot", "size": 11.155283073091292}, {"color": "#0200fd", "font": {"color": "black"}, "id": "zeeguu.core.model.feed", "label": "zeeguu.core.model.feed\n(LOC: 221 C: 9)", "mass": 100, "shape": "dot", "size": 11.905354919053549}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.topic", "label": "zeeguu.core.model.topic\n(LOC: 56 C: 2)", "mass": 100, "shape": "dot", "size": 10.48280486636651}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.articles_cache", "label": "zeeguu.core.model.articles_cache\n(LOC: 66 C: 2)", "mass": 100, "shape": "dot", "size": 10.569020021074815}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.article_word", "label": "zeeguu.core.model.article_word\n(LOC: 61 C: 2)", "mass": 100, "shape": "dot", "size": 10.525912443720664}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.exercise", "label": "zeeguu.core.model.exercise\n(LOC: 72 C: 3)", "mass": 100, "shape": "dot", "size": 10.620749113899798}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.exercise_outcome", "label": "zeeguu.core.model.exercise_outcome\n(LOC: 57 C: 4)", "mass": 100, "shape": "dot", "size": 10.491426381837341}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.exercise_source", "label": "zeeguu.core.model.exercise_source\n(LOC: 27 C: 2)", "mass": 100, "shape": "dot", "size": 10.232780917712425}, {"color": "#0200fd", "font": {"color": "black"}, "id": "zeeguu.core.model.text", "label": "zeeguu.core.model.text\n(LOC: 119 C: 7)", "mass": 100, "shape": "dot", "size": 11.025960341028835}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.bookmark_priority_arts", "label": "zeeguu.core.model.bookmark_priority_arts\n(LOC: 22 C: 2)", "mass": 100, "shape": "dot", "size": 10.189673340358272}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.cohort", "label": "zeeguu.core.model.cohort\n(LOC: 66 C: 4)", "mass": 100, "shape": "dot", "size": 10.569020021074815}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.teacher_cohort_map", "label": "zeeguu.core.model.teacher_cohort_map\n(LOC: 36 C: 3)", "mass": 100, "shape": "dot", "size": 10.310374556949899}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.domain_name", "label": "zeeguu.core.model.domain_name\n(LOC: 63 C: 2)", "mass": 100, "shape": "dot", "size": 10.543155474662324}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.localized_topic", "label": "zeeguu.core.model.localized_topic\n(LOC: 41 C: 2)", "mass": 100, "shape": "dot", "size": 10.353482134304052}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.starred_article", "label": "zeeguu.core.model.starred_article\n(LOC: 86 C: 2)", "mass": 100, "shape": "dot", "size": 10.741450330491427}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.teacher", "label": "zeeguu.core.model.teacher\n(LOC: 24 C: 6)", "mass": 100, "shape": "dot", "size": 10.206916371299933}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.topic_filter", "label": "zeeguu.core.model.topic_filter\n(LOC: 52 C: 2)", "mass": 100, "shape": "dot", "size": 10.448318804483188}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.topic_subscription", "label": "zeeguu.core.model.topic_subscription\n(LOC: 52 C: 2)", "mass": 100, "shape": "dot", "size": 10.448318804483188}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.user_preference", "label": "zeeguu.core.model.user_preference\n(LOC: 102 C: 3)", "mass": 100, "shape": "dot", "size": 10.879394578024716}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.learner_stats", "label": "zeeguu.core.model.learner_stats\n(LOC: 61 C: 4)", "mass": 100, "shape": "dot", "size": 10.525912443720664}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.user_exercise_session", "label": "zeeguu.core.model.user_exercise_session\n(LOC: 184 C: 5)", "mass": 100, "shape": "dot", "size": 11.58635884663282}, {"color": "#0000ff", "font": {"color": "black"}, "id": "zeeguu.core.model.word_to_study", "label": "zeeguu.core.model.word_to_study\n(LOC: 25 C: 1)", "mass": 100, "shape": "dot", "size": 10.215537886770763}, {"color": "#0500fa", "font": {"color": "black"}, "id": "zeeguu.core.model.__init__", "label": "zeeguu.core.model.__init__\n(LOC: 69 C: 19)", "mass": 100, "shape": "dot", "size": 10.594884567487307}, {"color": "#0100fe", "font": {"color": "black"}, "id": "zeeguu.core.model.smartwatch", "label": "zeeguu.core.model.smartwatch\n(LOC: 62 C: 6)", "mass": 100, "shape": "dot", "size": 10.534533959191494}]);
+                  edges = new vis.DataSet([{"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article", "label": "1", "to": "zeeguu.core.model.url", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article", "label": "1", "to": "zeeguu.core.model.feed", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article", "label": "1", "to": "zeeguu.core.model.topic", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article", "label": "1", "to": "zeeguu.core.model.user_article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.articles_cache", "label": "1", "to": "zeeguu.core.model.article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.article_word", "label": "1", "to": "zeeguu.core.model.article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.sorted_exercise_log", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.exercise", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.exercise_outcome", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.exercise_source", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.text", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark", "label": "1", "to": "zeeguu.core.model.user_word", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.bookmark_priority_arts", "label": "1", "to": "zeeguu.core.model.bookmark", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.cohort", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.cohort", "label": "2", "to": "zeeguu.core.model.user", "width": 0.1}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.cohort", "label": "1", "to": "zeeguu.core.model.teacher_cohort_map", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.cohort_article_map", "label": "1", "to": "zeeguu.core.model.article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.cohort_article_map", "label": "1", "to": "zeeguu.core.model.cohort", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.difficulty_lingo_rank", "label": "1", "to": "zeeguu.core.model.article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.exercise", "label": "1", "to": "zeeguu.core.model.exercise_outcome", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.exercise", "label": "1", "to": "zeeguu.core.model.exercise_source", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.exercise", "label": "3", "to": "zeeguu.core.model.bookmark", "width": 0.15000000000000002}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.feed", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.feed", "label": "1", "to": "zeeguu.core.model.url", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.localized_topic", "label": "1", "to": "zeeguu.core.model.topic", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.localized_topic", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.personal_copy", "label": "1", "to": "zeeguu.core.model.article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.personal_copy", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.search_filter", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.search_filter", "label": "1", "to": "zeeguu.core.model.search", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.search_subscription", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.search_subscription", "label": "1", "to": "zeeguu.core.model.search", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.session", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.starred_article", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.teacher", "label": "1", "to": "zeeguu.core.model.teacher_cohort_map", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.teacher_cohort_map", "label": "1", "to": "zeeguu.core.model.cohort", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.text", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.text", "label": "1", "to": "zeeguu.core.model.url", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.text", "label": "1", "to": "zeeguu.core.model.user_word", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.topic_filter", "label": "1", "to": "zeeguu.core.model.topic", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.topic_filter", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.topic_subscription", "label": "1", "to": "zeeguu.core.model.topic", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.topic_subscription", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.url", "label": "1", "to": "zeeguu.core.model.domain_name", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "1", "to": "zeeguu.core.model.cohort", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "1", "to": "zeeguu.core.model.user_preference", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "1", "to": "zeeguu.core.model.user_article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "1", "to": "zeeguu.core.model.user_reading_session", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "1", "to": "zeeguu.core.model.article", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "2", "to": "zeeguu.core.model.bookmark", "width": 0.1}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user", "label": "1", "to": "zeeguu.core.model.learner_stats", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user_activitiy_data", "label": "2", "to": "zeeguu.core.model.user_reading_session", "width": 0.1}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user_article", "label": "1", "to": "zeeguu.core.model.personal_copy", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user_exercise_session", "label": "1", "to": "zeeguu.core.model.user", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user_language", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.user_word", "label": "1", "to": "zeeguu.core.model.language", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.__init__", "label": "1", "to": "zeeguu.core.model.bookmark_priority_arts", "width": 0.05}, {"arrowStrikethrough": false, "arrows": "to", "color": "black", "from": "zeeguu.core.model.smartwatch", "label": "1", "to": "zeeguu.core.model.bookmark", "width": 0.05}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "discrete"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": false,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+                  // if this network requires displaying the configure window,
+                  // put it in its div
+                  options.configure["container"] = document.getElementById("config");
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -104,6 +104,11 @@ def api_module(module_name):
     return module_name.startswith("zeeguu.api")
 
 # ========================================================================
+# Extracts only model modules
+def model_module(module_name):
+    return module_name.startswith("zeeguu.core.model")
+
+# ========================================================================
 # Creates the first graph with all intereseting modules represented
 from pyvis.network import Network
 from IPython.core.display import HTML
@@ -142,7 +147,7 @@ def dependencies_graph():
 # ========================================================================
 # Creates the abstracted graph containing only the defined interesting top level modules
 
-def abstracted_to_top_level(G, depth=1, getCore = False, getApi = False):
+def abstracted_to_top_level(G, depth=1, getCore = False, getApi = False, getModel = False):
     package_activity = get_commit_activity(depth)
     lines_activity = get_lines_of_code_activity(depth)
 
@@ -189,28 +194,42 @@ def abstracted_to_top_level(G, depth=1, getCore = False, getApi = False):
         if(getCore):
             top_level_package_name_from = lines_activity[top_level_package(source, depth)]
             top_level_package_name_to = lines_activity[top_level_package(target, depth)]
-            if(core_module(source) and top_level_package_name_from > 99):
+            if(core_module(source)):
                 new_nodes.add(source)   
-            if(core_module(target) and top_level_package_name_to > 99):
+            if(core_module(target)):
                 new_nodes.add(target)   
-            if(core_module(source) and core_module(target) and top_level_package_name_from > 99 and top_level_package_name_to > 99):
+            if(core_module(source) and core_module(target)):
                 new_edges.append(edge)
         if(getApi):
             top_level_package_name_from = lines_activity[top_level_package(source, depth)]
             top_level_package_name_to = lines_activity[top_level_package(target, depth)]
-            if(api_module(source) and top_level_package_name_from > 99):
+            if(api_module(source)):
                 new_nodes.add(source)   
-            if(api_module(target) and top_level_package_name_to > 99):
+            if(api_module(target)):
                 new_nodes.add(target)   
-            if(api_module(source) and api_module(target) and top_level_package_name_from > 99 and top_level_package_name_to > 99):
+            if(api_module(source) and api_module(target)):
                 new_edges.append(edge)
-        if(getApi == False and getCore == False):
+        if(getModel):
+            if(model_module(source)):
+                new_nodes.add(source)   
+            if(model_module(target)):
+                new_nodes.add(target)   
+            if(model_module(source) and model_module(target)):
+                new_edges.append(edge)
+        if(getApi == False and getCore == False and getModel == False):
             new_nodes.add(edge["from"])
             new_nodes.add(edge["to"])
             new_edges.append(edge)
-    if(getApi):
-        print(len(new_nodes))
     zero_nodes = []
+
+    churn_upper_bound = 999
+    min_lines_of_code = 0
+    min_commit_count = 0
+
+    if(getCore):
+        churn_upper_bound = 300
+    if(getApi):
+        churn_upper_bound = 125
 
     for node in aG.nodes:
         if node["id"] in new_nodes:
@@ -221,13 +240,13 @@ def abstracted_to_top_level(G, depth=1, getCore = False, getApi = False):
             if lines == 0:
                 zero_nodes.append(node["id"])
                 continue
-            color = get_color(package_activity[top_level_package_name])
+            color = get_color(package_activity[top_level_package_name], churn_upper_bound)
             size = scale_value(lines)
             mass = scale_value(lines_activity[top_level_package_name]) * 0.3
             # color = 3
             # size = 3
-            # mass = 3
-            label = "{}\n(LOC: {})".format(top_level_package_name, lines)
+            mass = 100
+            label = "{}\n(LOC: {} C: {})".format(top_level_package_name, lines, package_activity[top_level_package_name])
             filteredAg.add_node(node["id"], color=color, size=size, mass=mass, label=label)
 
     edge_counts = {}
@@ -286,17 +305,17 @@ ADG.show("./ADG.html")
 # ========================================================================
 # Abstracted dependencies graph containing only the 3 top level files in the repository
 # ========================================================================
-ADG3 = abstracted_to_top_level(DG, 3)
-ADG3.toggle_physics(False)
-ADG3.prep_notebook()
-ADG3.force_atlas_2based()
-ADG3.show_buttons(filter_=["physics"])
-ADG3.show("./ADG3.html")
+# ADG3 = abstracted_to_top_level(DG, 3)
+# ADG3.toggle_physics(False)
+# ADG3.prep_notebook()
+# ADG3.force_atlas_2based()
+# ADG3.show_buttons(filter_=["physics"])
+# ADG3.show("./ADG3.html")
 
 # ========================================================================
 # Abstracted dependencies graph containing only the 3 top level files in the repository of the core
 # ========================================================================
-coreADG = abstracted_to_top_level(DG, 3, True, False)
+coreADG = abstracted_to_top_level(DG, 3, True, False, False)
 coreADG.toggle_physics(False)
 coreADG.prep_notebook()
 coreADG.force_atlas_2based()
@@ -304,12 +323,23 @@ coreADG.show_buttons(filter_=["physics"])
 coreADG.show("./coreADG.html")
 
 # ========================================================================
-# Abstracted dependencies graph containing only the 3 top level files in the repository of the core
+# Abstracted dependencies graph containing only the 4 top level files in the repository of the api
 # ========================================================================
-coreADG = abstracted_to_top_level(DG, 4, False, True)
+coreADG = abstracted_to_top_level(DG, 4, False, True, False)
 coreADG.toggle_physics(False)
 coreADG.prep_notebook()
 coreADG.force_atlas_2based()
 coreADG.show_buttons(filter_=["physics"])
 coreADG.show("./apiADG.html")
+
+# ========================================================================
+# Abstracted dependencies graph containing only the 4 top level files in the repository of the model
+# ========================================================================
+coreADG = abstracted_to_top_level(DG, 4, False, False, True)
+coreADG.toggle_physics(False)
+coreADG.prep_notebook()
+coreADG.force_atlas_2based()
+coreADG.show_buttons(filter_=["physics"])
+coreADG.show("./modelADG.html")
+
 
