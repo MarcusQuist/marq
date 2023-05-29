@@ -305,12 +305,12 @@ ADG.show("./ADG.html")
 # ========================================================================
 # Abstracted dependencies graph containing only the 3 top level files in the repository
 # ========================================================================
-# ADG3 = abstracted_to_top_level(DG, 3)
-# ADG3.toggle_physics(False)
-# ADG3.prep_notebook()
-# ADG3.force_atlas_2based()
-# ADG3.show_buttons(filter_=["physics"])
-# ADG3.show("./ADG3.html")
+ADG3 = abstracted_to_top_level(DG, 3)
+ADG3.toggle_physics(False)
+ADG3.prep_notebook()
+ADG3.force_atlas_2based()
+ADG3.show_buttons(filter_=["physics"])
+ADG3.show("./ADG3.html")
 
 # ========================================================================
 # Abstracted dependencies graph containing only the 3 top level files in the repository of the core
